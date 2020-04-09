@@ -27,7 +27,7 @@ class CertificateIsExpiringAlertSource(AlertSource):
         ) + await self.middleware.call('certificateauthority.query'):
             if cert['parsed']:
                 diff = (datetime.strptime(cert['until'], '%a %b %d %H:%M:%S %Y') - datetime.utcnow()).days
-                if diff < 10:
+                if 0 <= diff < 10:
                     alerts.append(
                         Alert(
                             CertificateIsExpiringSoonAlertClass if diff <= 2 else CertificateIsExpiringAlertClass,
